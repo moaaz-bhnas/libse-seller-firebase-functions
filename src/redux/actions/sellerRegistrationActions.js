@@ -3,7 +3,7 @@ import { functions } from "../../lib/firebase/client";
 export const registerSeller = (seller, setIsSeller, router) => {
   return async (dispatch, getState, { getFirestore }) => {
     const firestore = getFirestore();
-    console.log(seller);
+
     const {
       uid,
       email,
@@ -15,6 +15,11 @@ export const registerSeller = (seller, setIsSeller, router) => {
       openingHour,
       closingHour,
     } = seller;
+
+    const addSellerRole = functions.httpsCallable("addSellerRole");
+    addSellerRole({ uid }).then((result) => {
+      console.log(result);
+    });
 
     firestore
       .collection("sellers")
